@@ -1,5 +1,5 @@
 <?php
-	require('config.php');
+	require('db/config.php');
 
 	foreach ($_POST as $key => $value) 
 	{
@@ -49,7 +49,7 @@
 				$charid = mysql_insert_id($conn);
 			}
 
-			if ($powers != “”) 
+			if ($powers != "") 
 			{
 				$val = "";
 				foreach ($powers as $key => $id) 
@@ -90,7 +90,7 @@
 					or die(mysql_error());
 			}
 			
-			$redirect = ‘charlist.php’;
+			$redirect = 'charlist.php';
 			break;
 
 		case "Delete Character":
@@ -201,7 +201,7 @@
 				or die(mysql_error());
 			}
 			
-			$redirect = 'poweredit.php';
+			$redirect = 'power_edit.php';
 			
 			break;
 
@@ -215,7 +215,7 @@
 					or die(mysql_error());
 			}
 
-			$redirect = 'poweredit.php';
+			$redirect = 'power_edit.php';
 			break;
 
 		default:
