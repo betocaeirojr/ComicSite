@@ -1,4 +1,5 @@
 <?php
+	
 	require('db/config.php');
 	
 	$conn = mysql_connect(SQL_HOST, SQL_USER, SQL_PASS)
