@@ -1,12 +1,12 @@
 <?php
-	echo "DEBUG:: Just Before the Required...<BR>";
+	//echo "DEBUG:: Just Before the Required...<BR>";
 	require('db/config.php');
-	echo "DEBUG:: Just After the Required...<BR>";
+	//echo "DEBUG:: Just After the Required...<BR>";
 
 	// Begining Debuging $_POST
-	echo "<PRE>";
-	print_r($_POST);
-	echo "</PRE>";
+	//echo "<PRE>";
+	//print_r($_POST);
+	//echo "</PRE>";
 	// Finishing Debuging $_POST
 
 	foreach ($_POST as $key => $value) 
@@ -14,20 +14,20 @@
 		$$key = $value;
 	}
 
-	echo "DEBUG:: Connecting to DB... <BR>";
+	//echo "DEBUG:: Connecting to DB... <BR>";
 	// Connect to DB
-	echo "DEBUG:: MySQL Hostname: ". SQL_HOST . "; MySQL Username: " . SQL_USER . "; User pass: " . SQL_PASS . "!<BR>";
+	//echo "DEBUG:: MySQL Hostname: ". SQL_HOST . "; MySQL Username: " . SQL_USER . "; User pass: " . SQL_PASS . "!<BR>";
 
 	$conn = mysql_connect(SQL_HOST, SQL_USER, '')
 		or die('Could not connect to MySQL database. ' . mysql_error());
 
-	echo "DEBUG:: MySQL DB Name: " . SQL_DB . ".<BR>"; 
+	//echo "DEBUG:: MySQL DB Name: " . SQL_DB . ".<BR>"; 
 	
 	//Select Movie DV
 	mysql_select_db(SQL_DB, $conn);
-	echo "DEBUG:: " . SQL_DB . " database selected... <BR>";
+	//echo "DEBUG:: " . SQL_DB . " database selected... <BR>";
 
-	echo "DEBUG:: Just Before Switch $action... <BR>";
+	//echo "DEBUG:: Just Before Switch $action... <BR>";
 	switch ($action) 
 	{
 		case "Create Character":
@@ -104,7 +104,7 @@
 					or die(mysql_error());
 			}
 			
-			$redirect = 'charlist.php';
+			$redirect = 'char_list.php';
 			break;
 
 		case "Delete Character":
@@ -126,12 +126,14 @@
 			$result = mysql_query($sql)
 			or die(mysql_error());
 
-			$redirect = 'charlist.php';
+			$redirect = 'char_list.php';
 			break;
 
 		case "Update Character":
 			$sql = 	"INSERT IGNORE INTO char_zipcode (id, city, state) " .
 					"VALUES ('$zip', '$city', '$state')";
+
+			//echo "DEBUG:: SQL Statement is: $sql ...<BR>";
 
 			$result = mysql_query($sql)
 				or die(mysql_error());
@@ -141,10 +143,14 @@
 					"alias='$alias', real_name='$name', align='$align' " 	.
 					"WHERE m.id = $cid AND m.lair_id = l.id";
 
+			//echo "DEBUG:: SQL Statement is: $sql ...<BR>";
+
 			$result = mysql_query($sql)
 				or die(mysql_error());
 
 			$sql = "DELETE FROM char_power_link WHERE char_id = $cid";
+
+			//echo "DEBUG:: SQL Statement is: $sql ...<BR>";
 
 			$result = mysql_query($sql)
 				or die(mysql_error());
@@ -156,10 +162,12 @@
 				{
 					$val[] = "('$cid', '$id')";
 				}
-				$values = implode(‘,’, $val);
+				$values = implode(',', $val);
 				
 				$sql = 	"INSERT IGNORE INTO char_power_link (char_id, power_id) " .
 						"VALUES $values";
+
+				//echo "DEBUG:: SQL Statement is: $sql ...<BR>";
 
 				$result = mysql_query($sql)
 				or die(mysql_error());
@@ -195,38 +203,38 @@
 				$result = mysql_query($sql) or die(mysql_error());
 			}
 
-			$redirect = 'charlist.php';
+			$redirect = 'char_list.php';
 			
 			break;
 
 		case "Delete Powers":
-			echo "DEBUG:: Entering Deleting Powers... <BR>";
+			//echo "DEBUG:: Entering Deleting Powers... <BR>";
 			if ($powers != '') 
 			{
-				echo "DEBUG:: Powers = " . $powers . "<BR>";
+				//echo "DEBUG:: Powers = " . $powers . "<BR>";
 
 				$powerlist = implode(",", $powers);
-				echo "DEBUG:: So the powerslist = " . $powerlist . "<BR>";				
+				//echo "DEBUG:: So the powerslist = " . $powerlist . "<BR>";				
 				
 				// Deleting the Character Power
-				echo "DEBUG:: Deleting from Power Table...<BR>";
+				//echo "DEBUG:: Deleting from Power Table...<BR>";
 				$sql = "DELETE FROM char_power WHERE id IN ($powerlist)";
-				echo "DEBUG:: The Delete Statement is: " . $sql . "...<BR>";
+				//echo "DEBUG:: The Delete Statement is: " . $sql . "...<BR>";
 
-				echo "DEBUG:: Just before deleting from Power Table...<BR>";
+				//echo "DEBUG:: Just before deleting from Power Table...<BR>";
 				$result = mysql_query($sql)
 					or die(mysql_error());
-				echo "DEBUG:: Just After deleting from Power Table...<BR>";
+				//echo "DEBUG:: Just After deleting from Power Table...<BR>";
 
-				echo "DEBUG:: Taking care of referential integrety with CHAR_POWER_LINK Table. <BR>";
+				//echo "DEBUG:: Taking care of referential integrety with CHAR_POWER_LINK Table. <BR>";
 				$sql = 	"DELETE FROM char_power_link " .
 						"WHERE power_id IN ($powerlist)";
-				echo "DEBUG:: The Delete Statement is: " . $sql . "<BR>";
+				//echo "DEBUG:: The Delete Statement is: " . $sql . "<BR>";
 
-				echo "DEBUG:: Just Before deletion for keeping referential integrety..<BR>";
+				//echo "DEBUG:: Just Before deletion for keeping referential integrety..<BR>";
 				$result = mysql_query($sql)
 					or die(mysql_error());
-				echo "DEBUG:: Just After... <BR>";
+				//echo "DEBUG:: Just After... <BR>";
 			}
 			
 			//$redirect = 'power_edit.php';
@@ -234,28 +242,28 @@
 			break;
 
 		case "Add Power":
-			echo "DEBUG:: Entering Add Power Case... <BR>";
+			//echo "DEBUG:: Entering Add Power Case... <BR>";
 			if ($newpower != '')
 			{
 				$sql = 	"INSERT IGNORE INTO char_power (id, power) " .
 						"VALUES (NULL, '$newpower')";
 				
-				echo "DEBUG:: The SQL Statement is: " . $sql . "...<BR>";
+				//echo "DEBUG:: The SQL Statement is: " . $sql . "...<BR>";
 				$result = mysql_query($sql)
 					or die(mysql_error());
 
 				//Debug info Only
 				$lastPowerid = mysql_insert_id($conn);
-				echo "DEBUG:: Data successfully inserted. <BR>";
-				echo "DEBUG:: Power_id inserted is: " . $lastPowerid . "<BR>";
+				//echo "DEBUG:: Data successfully inserted. <BR>";
+				//echo "DEBUG:: Power_id inserted is: " . $lastPowerid . "<BR>";
 			}
 
-			//$redirect = 'power_edit.php';
+			$redirect = 'power_edit.php';
 			break;
 
 		default:
-			$redirect = 'charlist.php';
+			$redirect = 'char_list.php';
 	}
 
-	//header("Location: $redirect");
+	header("Location: $redirect");
 ?>

@@ -77,6 +77,6 @@
 				</tr>
 			</table>
 		</form>
-		<a href="charlist.php">Return to Home Page</a>
+		<a href="char_list.php">Return to Home Page</a>
 	</body>
 </html>

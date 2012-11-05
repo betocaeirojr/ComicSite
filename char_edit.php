@@ -19,6 +19,7 @@
 	
 	mysql_select_db(SQL_DB, $conn);
 	
+	// Create the Power List
 	$sql = "SELECT id, power FROM char_power";
 	
 	$result = mysql_query($sql)
@@ -32,6 +33,7 @@
 		}
 	}
 	
+	// Insert All other character in the list of potencial enemies.
 	$sql = "SELECT id, alias FROM char_main WHERE id != $char";
 	
 	$result = mysql_query($sql)
@@ -117,14 +119,12 @@
 			<table border="0" cellpadding="15" bgcolor="<?php echo $tablebg; ?>">
 				<tr>
 					<td>Character Name:</td>
-					<td><input type="text" name="alias" size="41" value="
-							<?php if (isset($ch)) { echo $ch['alias']; } ?>">
+					<td><input type="text" name="alias" size="41" value="<?php if (isset($ch)) { echo $ch['alias']; } ?>">
 					</td>
 				</tr>
 				<tr>
 					<td>Real Name:</td>
-					<td><input type="text" name="name" size="41" value="
-							<?php if (isset($ch)) { echo $ch['name']; } ?>">
+					<td><input type="text" name="name" size="41" value="<?php if (isset($ch)) { echo $ch['name']; } ?>">
 					</td>
 				</tr>
 				<tr>
@@ -152,14 +152,10 @@
 						(address,<br>city, state, zip)</font>
 					</td>
 					<td>
-						<input type="text" name="address" size="41" value=
-							"<?php if (isset($ch)) { echo $ch['address']; } ?>"><br>
-						<input type="text" name="city" value=
-							"<?php if (isset($ch)) { echo $ch['city']; } ?>">
-						<input type="text" name="state" size="2" value=
-							"<?php if (isset($ch)) { echo $ch['state']; } ?>">
-						<input type="text" name="zip" size="10" value=
-							"<?php if (isset($ch)) { echo $ch['zip']; } ?>">
+						<input type="text" name="address" size="41" value="<?php if (isset($ch)) { echo $ch['address']; } ?>"><br>
+						<input type="text" name="city" value="<?php if (isset($ch)) { echo $ch['city']; } ?>">
+						<input type="text" name="state" size="2" value="<?php if (isset($ch)) { echo $ch['state']; } ?>">
+						<input type="text" name="zip" size="10" value="<?php if (isset($ch)) { echo $ch['zip']; } ?>">
 					</td>
 				</tr>
 				<tr>
